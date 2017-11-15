@@ -14,12 +14,15 @@ import com.arnoldballiu.simpleblackjack.object.Card;
 
 public class SBJUtils {
 
+    /**
+     * Helper method to wrap up the calling of ContextCompat.
+     * Really useless.
+     *
+     * @param c Context or Activity
+     * @param id Drawable id to obtain
+     * @return A drawable object specified by <code>id</code>
+     */
     public static Drawable getDrawable(Context c, int id){
         return ContextCompat.getDrawable(c, id);
     }
-
-    public static int toDp(Context c, int pixel){
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pixel, c.getResources().getDisplayMetrics());
-    }
-
 }

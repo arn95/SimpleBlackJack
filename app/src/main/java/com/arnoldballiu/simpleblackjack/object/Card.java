@@ -8,17 +8,46 @@ import com.arnoldballiu.simpleblackjack.R;
 
 public class Card {
 
-    public int num = -1;
-    public int drawableId = -1;
-    public int type = -1;
-    public String name = "";
+    /**
+     * Number on the card. From 1 to 10. For jack, queen and king is from 11 to 13 respectively
+     */
+    private int num = -1;
+    /**
+     * The id of the drawable that is going to loaded to represent this card object visually on the UI
+     */
+    private int drawableId = -1;
+    /**
+     * The constant id to represent type of card. Ranges from 0 to 3.
+     * It can be <code>DIAMONDS</code>, <code>HEARTS</code>, <code>CLUBS</code>, <code>SPADES</code>
+     */
+    private int type = -1;
+    /**
+     * The human name of the card. Ex. Ace of Spades, Two of Hearts etc.
+     */
+    private String name = "";
+    /**
+     * The value of the card.
+     * In blackjack the values are 2-10 to cards 2-10.
+     * For Jack, Queen and King the value will be 10
+     * For Ace it can be either 1 or 11 depending on what is more favorable
+     */
+    private int value = -1;
 
-    //types
+    /**
+     * Type constants to be used to set <code>type</code> in a card object
+     */
     public static final int DIAMONDS = 0;
     public static final int HEARTS = 1;
     public static final int CLUBS = 2;
     public static final int SPADES = 3;
 
+    /**
+     * Private constructor to prevent call.
+     * Needs a <code>num</code> for card rank and <code>type</code> for card type
+     *
+     * @param num The rank of the card to create
+     * @param type The type of the card to create
+     */
     private Card(int num, int type){
         this.num = num;
         this.type = type;
@@ -26,10 +55,67 @@ public class Card {
         generateName();
     }
 
+    /**
+     * Static method to initialize the card object and carry out pre-use operations
+     *
+     * @param num The rank of the card to create
+     * @param type The type of the card to create
+     * @return
+     */
     public static Card init(int num, int type){
         return new Card(num, type);
     }
 
+    ///////////////////////////////////////////////
+    ///
+    /// GETTERS AND SETTERS FOR FIELDS
+    ///
+    ///////////////////////////////////////////////
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public void setDrawableId(int drawableId) {
+        this.drawableId = drawableId;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public int getDrawableId() {
+        return drawableId;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getValue() {
+        return value;
+    }
+    ///////////////////////////////////////////////
+
+    /**
+     * Generates a human readable name for the card and sets the <code>name</code> variable
+     * It uses the card <code>num</code> and <code>type</code> to determine name
+     */
     private void generateName(){
 
         if (this.num != -1 && this.type != -1){
@@ -44,8 +130,9 @@ public class Card {
                 case 8: this.name = "Eight"; break;
                 case 9: this.name = "Nine"; break;
                 case 10: this.name = "Ten"; break;
-                case 11: this.name = "Eleven"; break;
-                case 12: this.name = "Twelve"; break;
+                case 11: this.name = "Jack"; break;
+                case 12: this.name = "Queen"; break;
+                case 13: this.name = "King"; break;
             }
 
             this.name += " Of ";
@@ -60,6 +147,11 @@ public class Card {
 
     }
 
+    /**
+     * Returns the specific drawable id that pertains to a png of the card during runtime.
+     * It depends on <code>type</code> and <code>num</code> to find the right drawable
+     * @return The drawable id that this card uses to be displayed on UI
+     */
     private int getDrawable(){
         if (num != -1 && type != -1){
             switch (num){
@@ -172,6 +264,18 @@ public class Card {
                 case 10: {
 
                     switch (type){
+                        case Card.CLUBS : return R.drawable.ten_of_clubs;
+                        case Card.DIAMONDS: return R.drawable.ten_of_diamonds;
+                        case Card.HEARTS: return R.drawable.ten_of_hearts;
+                        case Card.SPADES: return R.drawable.ten_of_spades;
+                        default: return -1;
+                    }
+
+                }
+
+                case 11: {
+
+                    switch (type){
                         case Card.CLUBS : return R.drawable.jack_of_clubs;
                         case Card.DIAMONDS: return R.drawable.jack_of_diamonds;
                         case Card.HEARTS: return R.drawable.jack_of_hearts;
@@ -181,7 +285,7 @@ public class Card {
 
                 }
 
-                case 11: {
+                case 12: {
 
                     switch (type){
                         case Card.CLUBS : return R.drawable.queen_of_clubs;
@@ -193,7 +297,7 @@ public class Card {
 
                 }
 
-                case 12: {
+                case 13: {
 
                     switch (type){
                         case Card.CLUBS : return R.drawable.king_of_clubs;
